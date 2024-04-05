@@ -311,7 +311,8 @@
             })
 
             const initializeDataTable = function () {
-                let table = new DataTable('#excelTable', {
+                new DataTable('#excelTable', {
+                    destroy: true,
                     fixedHeader: {
                         header: true,
                         footer: true,
