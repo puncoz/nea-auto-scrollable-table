@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Screen Yellow Message Running</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #f0f0f0; /* Set background color */
+        overflow: hidden; /* Hide overflow */
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Set container height */
+        font-size: 24px;
+    }
+    .table-container {
+        background-color: yellow; /* Set background color */
+        padding: 7px; /* Add padding */
+        overflow: hidden; /* Hide overflow */
+        width: 1200px; /* Set width */
+        animation: tableAnimation 10s linear infinite; /* Adjust animation duration */
+    }
+    table {
+        width: 100%; /* Make table fill container */
+        border-collapse: collapse; /* Collapse borders */
+    }
+    th, td {
+        border: 1px solid black; /* Add border */
+        padding: 8px; /* Add padding */
+        text-align: center; /* Center text */
+    }
+    th {
+        background-color: #f0f0f0; /* Set header background color */
+    }
+    @keyframes tableAnimation {
+        0% {
+            transform: translateY(-100%); /* Start from the top */
+        }
+        100% {
+            transform: translateY(calc(100% + 100vh)); /* Move to the bottom */
+        }
+    }
+    .button-container {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    // JavaScript to save text to Excel file
+    function saveTextToFile(text, fileName, fileType) {
+        var blob = new Blob([text], { type: fileType });
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = window.URL.createObjectURL(blob);
+        a.click();
+    }
+
+    // Run this function when the page is loaded
+    window.onload = function() {
+        var table = document.querySelector('.table-container').innerText;
+        var fileName = "table";
+        
+        // Save to Excel file
+        document.getElementById('saveExcel').addEventListener('click', function() {
+            saveTextToFile(table, fileName + ".xls", 'application/vnd.ms-excel');
+        });
+    };
+</script>
+</head>
+<body>
+    <div class="container">
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Serial number</th>
+                    <th>ShutDown Detail</th>
+                    <th>Work Detail</th>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Remarks</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Chapur Pathalaiya 132kV line 1</td>
+                    <td>Conductor Upgrade</td>
+                    <td>2080-12-08</td>
+                    <td>6:00-13:00</td>
+                    <td>Everyday up to 15 days</td>
+                </tr>
+              
+              <tr>
+                    <td>2</td>
+                    <td>11kV Biratnagar 1 11kV Tarahara 1</td>
+                    <td>For Charging new 24MVA transformer on no load</td>
+                    <td>2080-12-08</td>
+                    <td>7:00-10:00</td>
+                    <td></td>
+                </tr>
+ 
+              <tr>
+                    <td>3</td>
+                    <td>11kV Duhabi & 11kV Biratnagar 3 Feeder</td>
+                    <td>Shifting of existing transformer and placement of new transformer on foundation alongwith dismantling of old 12kV VCB(4no.) with bus coupler and installation of new 12kv VCB</td>
+                    <td>2080-12-10</td>
+                    <td>7:00 to next day 7:00</td>
+                    <td>If installation of new 12kV VCB could be done earlier, interrupted feeders will be given supply from new power Trf.2</td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="saveExcel">Save as Excel</button>
+    </div>
+</body>
+</html>

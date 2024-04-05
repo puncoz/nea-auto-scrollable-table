@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Yellow Message Running</title>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /* set background color*/
+            background-color: #f0f0f0;
+            /* hide overflow */
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* set conatiner height */
+            height: 100%;
+            font-size: 24px;
+        }
+
+        .table-container {
+            /* set background color */
+            background-color: yellow;
+            /* add padding */
+            padding: 7px;
+            /* hide overflow */
+            overflow: hidden;
+            /* set width */
+            width: 1200px;
+        }
+
+        table {
+            /* make table fill container */
+            width: 100%;
+            /* collapse border */
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            /* add border */
+            border: 1px solid black;
+            /* add padding */
+            padding: 8px;
+            /* center text */
+            text-align: center;
+        }
+
+        th {
+            /* set header background color */
+            background-color: #f0f0f0;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial number</th>
+                        <th>ShutDown Detail</th>
+                        <th>Work Detail</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Chapur Pathalaiya 132kV line 1</td>
+                        <td>Conductor Upgrade</td>
+                        <td>2080-12-08</td>
+                        <td>6:00-13:00</td>
+                        <td>Everyday up to 15 days</td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>11kV Biratnagar 1 11kV Tarahara 1</td>
+                        <td>For Charging new 24MVA transformer on no load</td>
+                        <td>2080-12-08</td>
+                        <td>7:00-10:00</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>11kV Duhabi & 11kV Biratnagar 3 Feeder</td>
+                        <td>Shifting of existing transformer and placement of new transformer on foundation alongwith
+                            dismantling of old 12kV VCB(4no.) with bus coupler and installation of new 12kv VCB</td>
+                        <td>2080-12-10</td>
+                        <td>7:00 to next day 7:00</td>
+                        <td>If installation of new 12kV VCB could be done earlier, interrupted feeders will be given
+                            supply from new power Trf.2</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button id="saveExcel">Save as Excel</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function saveTextToFile(text, fileName, fileType) {
+            var blob = new Blob([text], { type: fileType })
+            var a = document.createElement("a")
+            a.download = fileName
+            a.href = window.URL.createObjectURL(blob)
+            a.click()
+        }
+
+        $(function () {
+            $.fn.infiniteScrollUp = function () {
+                setInterval(function () {
+                    var firstRow = $("tbody tr:first").clone()
+
+                    $("tbody tr:first").remove()
+                    $("tbody").append(firstRow)
+                }, 1000)
+            }
+
+            $("tbody").infiniteScrollUp()
+
+            $("#saveExcel").click(function () {
+                var table = document.querySelector('.table-container').innerText;
+                var fileName = "table";
+
+                saveTextToFile(table, fileName, "application/vnd.ms-excel")
+            })
+        })
+    </script>
+</body>
+
+</html>
